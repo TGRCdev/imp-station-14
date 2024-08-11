@@ -34,20 +34,20 @@ public sealed class ShowJobIconsSystem : EquipmentHudSystem<ShowJobIconsComponen
         {
             foreach (var item in items)
             {
-                // ID Card
-                if (TryComp<IdCardComponent>(item, out var id))
+                // PDA
+                if (TryComp<PdaComponent>(item, out var pda)
+                    && pda.ContainedId != null
+                    && TryComp<IdCardComponent>(pda.ContainedId, out var id))
                 {
                     iconId = id.JobIcon;
                     break;
                 }
 
-                // PDA
-                if (TryComp<PdaComponent>(item, out var pda)
-                    && pda.ContainedId != null
-                    && TryComp(pda.ContainedId, out id))
+                // ID Card
+                if (TryComp<IdCardComponent>(item, out id))
                 {
                     iconId = id.JobIcon;
-                    break;
+                    // If we find a PDA, prioritize that
                 }
             }
         }

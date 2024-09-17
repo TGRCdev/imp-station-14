@@ -10,7 +10,9 @@ using Content.Shared.Inventory;
 using Content.Shared.MagicMirror;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
+using SQLitePCL;
 
 namespace Content.Server.MagicMirror;
 
@@ -46,6 +48,7 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
         SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorChangeColorDoAfterEvent>(OnChangeColorDoAfter);
         SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorRemoveSlotDoAfterEvent>(OnRemoveSlotDoAfter);
         SubscribeLocalEvent<MagicMirrorComponent, MagicMirrorAddSlotDoAfterEvent>(OnAddSlotDoAfter);
+        SubscribeLocalEvent<ChangeHairOnHitComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
     private void OnMagicMirrorSelect(EntityUid uid, MagicMirrorComponent component, MagicMirrorSelectMessage message)
@@ -365,6 +368,17 @@ public sealed class MagicMirrorSystem : SharedMagicMirrorSystem
 
         UpdateInterface(uid, component.Target.Value, component);
 
+    }
+
+    private void OnMeleeHit(EntityUid uid, ChangeHairOnHitComponent comp, MeleeHitEvent args)
+    {
+        if(args.Handled || args.HitEntities.Count == 0)
+            return;
+    
+        var target = args.HitEntities.First();
+
+        if(CheckHeadSlotOrClothes(uid, target))
+            return;
     }
 
     private void OnUiClosed(Entity<MagicMirrorComponent> ent, ref BoundUIClosedEvent args)

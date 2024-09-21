@@ -23,8 +23,12 @@ namespace Content.Server.Power.EntitySystems
 
         private void UpdateAppearance(EntityUid uid, CableVisComponent cableVis, ref NodeGroupsRebuilt args)
         {
+            Log.Debug($"Updating cable appearance for {uid}");
             if (!_nodeContainer.TryGetNode(uid, cableVis.Node, out CableNode? node))
+            {
+                Log.Debug("Failed to get node");
                 return;
+            }
 
             var transform = Transform(uid);
             if (!TryComp<MapGridComponent>(transform.GridUid, out var grid))
@@ -32,6 +36,8 @@ namespace Content.Server.Power.EntitySystems
 
             var mask = WireVisDirFlags.None;
             var tile = grid.TileIndicesFor(transform.Coordinates);
+
+            Log.Debug($"Reachable nodes: {node.ReachableNodes.Count}");
 
             foreach (var reachable in node.ReachableNodes)
             {
@@ -51,6 +57,8 @@ namespace Content.Server.Power.EntitySystems
                     _ => WireVisDirFlags.None
                 };
             }
+
+            Log.Debug($"Resulting mask: {mask}");
 
             _appearance.SetData(uid, WireVisVisuals.ConnectedMask, mask);
         }

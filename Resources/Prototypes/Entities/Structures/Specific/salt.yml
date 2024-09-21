@@ -1,0 +1,40 @@
+- type: entity
+  id: SaltLine
+  name: salt line
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+    noRot: true
+  # TODO: Remove both of these, same with CollideOnAnchor
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+  - type: Sprite
+    sprite: Objects/Specific/Chapel/salt.rsi
+    state: salt_0
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: CollideOnAnchor
+  - type: Appearance
+  - type: CableVis
+    node: salt
+  - type: RevealRevenantOnCollide
+  - type: CableVisualizer
+    statePrefix: salt_
+  - type: NodeContainer
+    nodes:
+      salt:
+        !type:CableNode
+        nodeGroupID: Salt

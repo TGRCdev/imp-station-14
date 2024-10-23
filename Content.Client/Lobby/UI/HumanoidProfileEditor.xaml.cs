@@ -233,6 +233,11 @@ namespace Content.Client.Lobby.UI
                 OnSkinColorOnValueChanged();
             };
 
+            SkinOpacity.OnValueChanged += _ =>
+            {
+                OnSkinColorOnValueChanged();
+            };
+
             #endregion
 
             #region Hair
@@ -1126,6 +1131,20 @@ namespace Content.Client.Lobby.UI
                     Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                     break;
                 }
+                case HumanoidSkinColor.TranslucentHues:
+                {
+                    if (!RgbSkinColorContainer.Visible)
+                    {
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
+                    }
+
+                    var color = _rgbSkinColorSelector.Color.WithAlpha(SkinOpacity.Value);
+                    Markings.CurrentSkinColor = color;
+
+                    Profile = Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    break;
+                }
             }
 
             ReloadProfilePreview();
@@ -1351,6 +1370,21 @@ namespace Content.Client.Lobby.UI
 
                     _rgbSkinColorSelector.Color = SkinColor.ClosestVoxColor(Profile.Appearance.SkinColor);
 
+                    break;
+                }
+                case HumanoidSkinColor.TranslucentHues:
+                {
+                    if (!RgbSkinColorContainer.Visible)
+                    {
+                        Skin.Visible = false;
+                        RgbSkinColorContainer.Visible = true;
+                    }
+                    if (!SkinOpacity.Visible)
+                        SkinOpacity.Visible = true;
+
+                    // set the RGB values to the direct values otherwise
+                    _rgbSkinColorSelector.Color = Profile.Appearance.SkinColor;
+                    SkinOpacity.Value = Profile.Appearance.SkinColor.A;
                     break;
                 }
             }

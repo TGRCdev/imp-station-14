@@ -7,7 +7,7 @@
   defaultSkinTone: "#b8b8b8"
   markingLimits: MobSlimeMarkingLimits
   dollPrototype: MobSlimePersonDummy
-  skinColoration: Hues
+  skinColoration: TranslucentHues
 
 - type: speciesBaseSprites
   id: MobSlimeSprites

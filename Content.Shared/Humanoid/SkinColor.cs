@@ -216,6 +216,9 @@ public static class SkinColor
         return Color.FromHsv(manipulatedColor);
     }
 
+    // TODO
+    public static Color MakeTranslucentHueValid(Color color) => MakeHueValid(color);
+
     /// <summary>
     ///     Verify if this color is above a minimum luminosity
     /// </summary>
@@ -226,6 +229,9 @@ public static class SkinColor
         return Color.ToHsv(color).Z >= MinHuesLightness;
     }
 
+    // TODO
+    public static bool VerifyTranslucentHues(Color color) => VerifyHues(color);
+
     public static bool VerifySkinColor(HumanoidSkinColor type, Color color)
     {
         return type switch
@@ -234,6 +240,7 @@ public static class SkinColor
             HumanoidSkinColor.TintedHues => VerifyTintedHues(color),
             HumanoidSkinColor.Hues => VerifyHues(color),
             HumanoidSkinColor.VoxFeathers => VerifyVoxFeathers(color),
+            HumanoidSkinColor.TranslucentHues => VerifyTranslucentHues(color),
             _ => false,
         };
     }
@@ -246,6 +253,7 @@ public static class SkinColor
             HumanoidSkinColor.TintedHues => ValidTintedHuesSkinTone(color),
             HumanoidSkinColor.Hues => MakeHueValid(color),
             HumanoidSkinColor.VoxFeathers => ClosestVoxColor(color),
+            HumanoidSkinColor.TranslucentHues => MakeTranslucentHueValid(color),
             _ => color
         };
     }
@@ -257,4 +265,5 @@ public enum HumanoidSkinColor : byte
     Hues,
     VoxFeathers, // Vox feathers are limited to a specific color range
     TintedHues, //This gives a color tint to a humanoid's skin (10% saturation with full hue range).
+    TranslucentHues, // Slimes can set their opacity
 }

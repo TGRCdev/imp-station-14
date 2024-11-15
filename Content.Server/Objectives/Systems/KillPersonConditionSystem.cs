@@ -176,7 +176,7 @@ public sealed class KillPersonConditionSystem : EntitySystem
     private float GetProgress(EntityUid target, bool requireDead)
     {
         // deleted or gibbed or something, counts as dead
-        if (!TryComp<MindComponent>(target, out var mind) || mind.OwnedEntity == null || TryComp<GhostBarPatronComponent>(mind.OwnedEntity, out _))
+        if (!TryComp<MindComponent>(target, out var mind) || mind.OwnedEntity == null || TryComp<TargetImmuneComponent>(mind.OwnedEntity, out _))
             return 1f;
 
         // dead is success

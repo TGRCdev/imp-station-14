@@ -15,6 +15,7 @@ using Content.Server.Mind;
 using Content.Shared.Mind.Components;
 using Content.Server.Antag.Components;
 using Content.Shared.Mindshield.Components;
+using Content.Server.Objectives.Components;
 
 namespace Content.Server._Goobstation.Ghostbar;
 
@@ -56,7 +57,7 @@ public sealed class GhostBarSystem : EntitySystem
 
     public void SpawnPlayer(GhostBarSpawnEvent msg, EntitySessionEventArgs args)
     {
-        if (!_entityManager.HasComponent<GhostComponent>(args.SenderSession.AttachedEntity))
+        if (!HasComp<GhostComponent>(args.SenderSession.AttachedEntity))
         {
             Log.Warning($"User {args.SenderSession.Name} tried to spawn at ghost bar without being a ghost.");
             return;
@@ -66,7 +67,7 @@ public sealed class GhostBarSystem : EntitySystem
         var query = EntityQueryEnumerator<GhostBarSpawnComponent>();
         while (query.MoveNext(out var ent, out _))
         {
-            spawnPoints.Add(_entityManager.GetComponent<TransformComponent>(ent).Coordinates);
+            spawnPoints.Add(Transform(ent).Coordinates);
         }
 
         if (spawnPoints.Count == 0)
@@ -84,9 +85,10 @@ public sealed class GhostBarSystem : EntitySystem
         RemComp<TemperatureComponent>(mobUid);
         RemComp<RespiratorComponent>(mobUid);
         RemComp<BarotraumaComponent>(mobUid);
-        _entityManager.EnsureComponent<GhostBarPatronComponent>(mobUid);
-        _entityManager.EnsureComponent<MindShieldComponent>(mobUid);
-        _entityManager.EnsureComponent<AntagImmuneComponent>(mobUid);
+        EnsureComp<GhostBarPatronComponent>(mobUid);
+        EnsureComp<TargetImmuneComponent>(mobUid);
+        EnsureComp<MindShieldComponent>(mobUid);
+        EnsureComp<AntagImmuneComponent>(mobUid);
 
 
         var targetMind = _mindSystem.GetMind(args.SenderSession.UserId);

@@ -7,6 +7,7 @@ using Content.Server.Maps;
 using Content.Server.Objectives.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Clothing;
+using Content.Shared.Damage;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
@@ -26,9 +27,9 @@ public sealed partial class SinnerSystem : EntitySystem
     [Dependency] private readonly LoadoutSystem _loadout = default!;
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly SharedMindSystem _mind = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
-    [ValidatePrototypeId<GameMapPrototype>]
-    private const string MapPath = "Maps/_Goobstation/Nonstations/ghostbar.yml";
+    private const string MapPath = "Maps/_Impstation/Nonstations/hell.yml";
 
     public override void Initialize()
     {
@@ -36,6 +37,7 @@ public sealed partial class SinnerSystem : EntitySystem
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<SinnerComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<InHellComponent, DamageChangedEvent>(OnDamageChange);
     }
 
     private void OnRoundStart(RoundStartingEvent ev)
@@ -45,6 +47,11 @@ public sealed partial class SinnerSystem : EntitySystem
         var options = new MapLoadOptions { LoadMap = true };
         if (_mapLoader.TryLoad(mapId, MapPath, out _, options))
             _mapSystem.SetPaused(mapId, false);
+    }
+
+    private void OnDamageChange(EntityUid uid, InHellComponent comp, ref DamageChangedEvent args)
+    {
+        args.Damageable.Damage.ClampMax(0);
     }
 
     private void OnMobStateChanged(EntityUid uid, SinnerComponent comp, MobStateChangedEvent args)
@@ -62,8 +69,10 @@ public sealed partial class SinnerSystem : EntitySystem
         Log.Debug($"Sending {mindContainer.Mind} to hell!!!!!!!!");
 
         var mindEnt = mindContainer.Mind.Value;
+        var mind = Comp<MindComponent>(mindEnt);
+        mind.PreventGhosting = true;
 
-        var spawnPoints = EntityManager.GetAllComponents(typeof(GhostBarSpawnComponent)).ToImmutableList();
+        var spawnPoints = EntityManager.GetAllComponents(typeof(HellSpawnComponent)).ToImmutableList();
         if (spawnPoints.IsEmpty)
         {
             Log.Warning("Hell has no spawners! Failed to send sinner to hell.");
@@ -76,6 +85,7 @@ public sealed partial class SinnerSystem : EntitySystem
         var mobUid = _spawningSystem.SpawnPlayerMob(Transform(newSpawn.Uid).Coordinates, null, profile, null);
         EnsureComp<AntagImmuneComponent>(mobUid);
         EnsureComp<TargetImmuneComponent>(mobUid);
+        EnsureComp<InHellComponent>(mobUid);
 
         _mind.TransferTo(mindEnt, mobUid);
         Log.Debug($"Created sinner entity {mobUid}");

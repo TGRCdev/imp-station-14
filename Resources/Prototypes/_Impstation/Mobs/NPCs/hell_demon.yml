@@ -1,0 +1,41 @@
+- type: entity
+  id: MobHellDemon
+  parent: MobHellspawn
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        melee:
+          maxVol: 30
+          reagents:
+            - ReagentId: Razorium
+              Quantity: 30
+    - type: MeleeChemicalInjector
+      solution: melee
+      transferAmount: 10
+    - type: SolutionRegeneration
+      solution: melee
+      generated:
+        reagents:
+        - ReagentId: Razorium
+          Quantity: 30
+    - type: Flammable
+      fireSpread: true
+      alwaysCombustible: true
+      damage:
+        types:
+          Heat: 0
+    - type: MeleeThrowOnHit
+
+- type: entity
+  name: hell demon spawner
+  id: SpawnMobHellDemon
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: hellspawn
+      sprite: Markers/mobs.rsi
+  - type: ConditionalSpawner
+    prototypes:
+      - MobHellDemon

@@ -1,16 +1,14 @@
 using System.Collections.Immutable;
-using Content.Server._Goobstation.Ghostbar.Components;
 using Content.Server.Antag.Components;
+using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Events;
-using Content.Server.Maps;
+using Content.Server.Mind;
 using Content.Server.Objectives.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Clothing;
 using Content.Shared.Damage;
-using Content.Shared.Humanoid;
 using Content.Shared.Mind;
-using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
@@ -37,6 +35,8 @@ public sealed partial class SinnerSystem : EntitySystem
 
         SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
         SubscribeLocalEvent<SinnerComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<SinnerComponent, EntityTerminatingEvent>(OnEntityTerminating, before: [typeof(MindSystem)]);
+        SubscribeLocalEvent<SinnerComponent, BeforeGibbedEvent>(OnGibbed);
         SubscribeLocalEvent<InHellComponent, DamageChangedEvent>(OnDamageChange);
     }
 
@@ -54,23 +54,15 @@ public sealed partial class SinnerSystem : EntitySystem
         args.Damageable.Damage.ClampMax(0);
     }
 
-    private void OnMobStateChanged(EntityUid uid, SinnerComponent comp, MobStateChangedEvent args)
+    public void SendToHell(EntityUid uid)
     {
-        Log.Debug("SinnerSystem.OnMobStateChanged entered");
-        if (args.NewMobState != MobState.Dead)
-            return;
+        _mind.TryGetMind(uid, out var mindId, out var mind);
+        if (mind == null)
+        {
+            Log.Warning("Sending an entity without a mind to hell");
+        }
 
-        if (!TryComp<MindContainerComponent>(uid, out var mindContainer))
-            return;
-
-        if (!mindContainer.HasMind)
-            return;
-
-        Log.Debug($"Sending {mindContainer.Mind} to hell!!!!!!!!");
-
-        var mindEnt = mindContainer.Mind.Value;
-        var mind = Comp<MindComponent>(mindEnt);
-        mind.PreventGhosting = true;
+        Log.Debug($"Sending {uid} to hell!!!!!!!!");
 
         var spawnPoints = EntityManager.GetAllComponents(typeof(HellSpawnComponent)).ToImmutableList();
         if (spawnPoints.IsEmpty)
@@ -87,7 +79,33 @@ public sealed partial class SinnerSystem : EntitySystem
         EnsureComp<TargetImmuneComponent>(mobUid);
         EnsureComp<InHellComponent>(mobUid);
 
-        _mind.TransferTo(mindEnt, mobUid);
+        if (mind != null)
+        {
+            _mind.TransferTo(mindId, mobUid, mind: mind);
+            mind.PreventGhosting = true;
+        }
         Log.Debug($"Created sinner entity {mobUid}");
+    }
+
+    private void OnGibbed(EntityUid uid, SinnerComponent comp, BeforeGibbedEvent args)
+    {
+        SendToHell(uid);
+        RemCompDeferred<SinnerComponent>(uid);
+    }
+
+    private void OnEntityTerminating(EntityUid uid, SinnerComponent comp, EntityTerminatingEvent args)
+    {
+        SendToHell(uid);
+        RemCompDeferred<SinnerComponent>(uid);
+    }
+
+    private void OnMobStateChanged(EntityUid uid, SinnerComponent comp, MobStateChangedEvent args)
+    {
+        Log.Debug("SinnerSystem.OnMobStateChanged entered");
+        if (args.NewMobState != MobState.Dead)
+            return;
+
+        SendToHell(uid);
+        RemCompDeferred<SinnerComponent>(uid);
     }
 }

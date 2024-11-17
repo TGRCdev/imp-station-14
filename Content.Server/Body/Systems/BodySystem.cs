@@ -115,6 +115,9 @@ public sealed class BodySystem : SharedBodySystem
             return new HashSet<EntityUid>();
         }
 
+        var preEv = new BeforeGibbedEvent();
+        RaiseLocalEvent(bodyId, preEv);
+
         var xform = Transform(bodyId);
         if (xform.MapUid is null)
             return new HashSet<EntityUid>();

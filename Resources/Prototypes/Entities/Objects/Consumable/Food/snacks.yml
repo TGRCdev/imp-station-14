@@ -144,6 +144,13 @@
       - id: FoodSnackChocolateBar
     sound:
       path: /Audio/Effects/unwrap.ogg
+  - type: SpawnItemsOnDoAfter # impstation edit
+    duration: 5
+    items:
+      - id: FoodPacketChocolateTrash
+      - id: FoodSnackChocolateBar
+    sound:
+      path: /Audio/Effects/unwrap.ogg
   - type: SolutionContainerManager
     solutions:
       food:

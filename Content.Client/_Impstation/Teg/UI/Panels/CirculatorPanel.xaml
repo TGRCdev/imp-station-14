@@ -1,0 +1,18 @@
+<PanelContainer
+    xmlns="https://spacestation14.io"
+    xmlns:panels="clr-namespace:Content.Client._Impstation.Teg.UI.Panels"
+>
+    <BoxContainer Orientation="Vertical">
+        <Label Name="CircTitle" />
+        <GridContainer Columns="2">
+            <Label Text="P Δ" />
+            <Label Name="PressureDelta" StyleClasses="LCD" />
+
+            <Label Text="MOLE Δ" />
+            <Label Name="MolesTransferred" StyleClasses="LCD" />
+
+            <Label Text="TEMP" />
+            <Label Name="Temperature" StyleClasses="LCD" />
+        </GridContainer>
+    </BoxContainer>
+</PanelContainer>

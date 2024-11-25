@@ -15,34 +15,11 @@ public sealed partial class TegWindow : FancyWindow
     public TegWindow()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
     }
 
     public void UpdateState(TegUIState state)
     {
-        var circA = state.CircA != null ? $"""
-        Pressure delta: {state.CircA?.LastPressureDelta}
-        Temperature: {state.CircA?.LastTemperature}
-        Mole transfer rate: {state.CircA?.LastMolesTransferred}
-        """ : "null";
-
-        var circB = state.CircB != null ? $"""
-        Pressure delta: {state.CircB?.LastPressureDelta}
-        Temperature: {state.CircB?.LastTemperature}
-        Mole transfer rate: {state.CircB?.LastMolesTransferred}
-        """ : "null";
-
-        TegTest.Text = $"""
-        Circulator A:
-            {circA}
-
-        Circulator B:
-            {circB}
-
-        Power:
-            Potential: {state.PotentialEnergy}
-            Actual: {state.ActualEnergy}
-            Target: {state.TargetEnergy}
-        """;
+        CircA.UpdateState(state.CircA);
+        CircB.UpdateState(state.CircB);
     }
 }

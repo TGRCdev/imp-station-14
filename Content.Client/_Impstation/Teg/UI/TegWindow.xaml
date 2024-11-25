@@ -6,6 +6,7 @@
     xmlns:panels="clr-namespace:Content.Client._Impstation.Teg.UI.Panels"
 >
     <BoxContainer Orientation="Horizontal">
-        <Label Name="TegTest" />
+        <panels:CirculatorPanel Title="CIRCULATOR A" Name="CircA" Margin="6 6 6 6" />
+        <panels:CirculatorPanel Title="CIRCULATOR B" Name="CircB" Margin="6 6 0 6" />
     </BoxContainer>
 </ui:FancyWindow>

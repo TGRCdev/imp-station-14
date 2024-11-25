@@ -44,7 +44,7 @@ namespace Content.Server.Power.Generation.Teg;
 /// <seealso cref="TegCirculatorComponent"/>
 /// <seealso cref="TegNodeGroup"/>
 /// <seealso cref="TegSensorData"/>
-public sealed class TegSystem : EntitySystem
+public sealed partial class TegSystem : EntitySystem
 {
     /// <summary>
     /// Node name for the TEG part connection nodes (<see cref="TegNodeGroup"/>).
@@ -189,13 +189,16 @@ public sealed class TegSystem : EntitySystem
 
         circAComp.LastPressureDelta = δpA;
         circAComp.LastMolesTransferred = airA.TotalMoles;
+        circAComp.LastTemperature = airA.Temperature;
         circBComp.LastPressureDelta = δpB;
         circBComp.LastMolesTransferred = airB.TotalMoles;
+        circBComp.LastTemperature = airB.Temperature;
 
         _atmosphere.Merge(outletA.Air, airA);
         _atmosphere.Merge(outletB.Air, airB);
 
         UpdateAppearance(uid, component, powerReceiver, tegGroup);
+        UpdateUI(uid, component, tegGroup, supplier); // impstation edit
     }
 
     private void UpdateAppearance(

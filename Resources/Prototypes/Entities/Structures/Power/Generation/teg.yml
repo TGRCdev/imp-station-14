@@ -8,6 +8,13 @@
   components:
     - type: Transform
       noRot: false
+    - type: UserInterface # impstation edit
+      interfaces:
+        enum.TegInterfaceKey.Key:
+          type: TegBoundUserInterface
+    - type: ActivatableUI
+      key: enum.TegInterfaceKey.Key
+    - type: ActivatableUIRequiresPower
     - type: Sprite
       sprite: Structures/Power/Generation/teg.rsi
       layers:

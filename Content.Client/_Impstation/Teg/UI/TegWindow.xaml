@@ -1,0 +1,11 @@
+<ui:FancyWindow
+    Title="{Loc 'teg-window-title'}"
+    MinSize="450 300"
+    xmlns="https://spacestation14.io"
+    xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:panels="clr-namespace:Content.Client._Impstation.Teg.UI.Panels"
+>
+    <BoxContainer Orientation="Horizontal">
+        <Label Name="TegTest" />
+    </BoxContainer>
+</ui:FancyWindow>

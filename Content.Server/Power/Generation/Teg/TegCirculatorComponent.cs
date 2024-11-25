@@ -25,6 +25,14 @@ public sealed partial class TegCirculatorComponent : Component
     [DataField("lastMolesTransferred")]
     public float LastMolesTransferred;
 
+    // impstation edit
+    /// <summary>
+    /// The temperature of the gas transferred between the inlet and the outlet last tick.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("lastTemperature")]
+    public float LastTemperature;
+
     /// <summary>
     /// Minimum pressure delta between inlet and outlet for which the circulator animation speed is "fast".
     /// </summary>

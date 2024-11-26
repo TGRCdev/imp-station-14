@@ -31,7 +31,7 @@ public sealed partial class CirculatorPanel : PanelContainer
             return new string(' ', 9);
 
         var num = float.Clamp(value.Value, -99999.99f, 99999.99f);
-        return num.ToString("0.00").PadLeft(9);
+        return num.ToString("0.00");
     }
 
     public void UpdateState(TegCirculatorState? state)

@@ -1,18 +1,25 @@
 <PanelContainer
     xmlns="https://spacestation14.io"
     xmlns:panels="clr-namespace:Content.Client._Impstation.Teg.UI.Panels"
+    StyleClasses="BackgroundPanel"
 >
     <BoxContainer Orientation="Vertical">
         <Label Name="CircTitle" />
         <GridContainer Columns="2">
             <Label Text="P Δ" />
-            <Label Name="PressureDelta" StyleClasses="LCD" />
+            <PanelContainer StyleClasses="LCD" HorizontalAlignment="Right" MinWidth="220" Margin="6 0 0 0">
+                <Label Name="PressureDelta" StyleClasses="LCD" HorizontalAlignment="Right" Margin="3"/>
+            </PanelContainer>
 
             <Label Text="MOLE Δ" />
-            <Label Name="MolesTransferred" StyleClasses="LCD" />
+            <PanelContainer StyleClasses="LCD" HorizontalAlignment="Right" MinWidth="220" Margin="6 0 0 0">
+                <Label Name="MolesTransferred" StyleClasses="LCD" HorizontalAlignment="Right" Margin="3"/>
+            </PanelContainer>
 
             <Label Text="TEMP" />
-            <Label Name="Temperature" StyleClasses="LCD" />
+            <PanelContainer StyleClasses="LCD" HorizontalAlignment="Right" MinWidth="220" Margin="6 0 0 0">
+                <Label Name="Temperature" StyleClasses="LCD" HorizontalAlignment="Right" Margin="3"/>
+            </PanelContainer>
         </GridContainer>
     </BoxContainer>
 </PanelContainer>

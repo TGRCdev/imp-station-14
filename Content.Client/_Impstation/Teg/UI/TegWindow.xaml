@@ -1,12 +1,12 @@
 <ui:FancyWindow
     Title="{Loc 'teg-window-title'}"
-    MinSize="450 300"
+    MinSize="600 480"
     xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:panels="clr-namespace:Content.Client._Impstation.Teg.UI.Panels"
 >
     <BoxContainer Orientation="Horizontal">
-        <panels:CirculatorPanel Title="CIRCULATOR A" Name="CircA" Margin="6 6 6 6" />
-        <panels:CirculatorPanel Title="CIRCULATOR B" Name="CircB" Margin="6 6 0 6" />
+        <panels:CirculatorPanel Title="CIRCULATOR A" Name="CircA" Margin="6" />
+        <panels:CirculatorPanel Title="CIRCULATOR B" Name="CircB" Margin="6" />
     </BoxContainer>
 </ui:FancyWindow>

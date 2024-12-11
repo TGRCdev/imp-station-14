@@ -107,10 +107,10 @@
       DisposalTransit: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: conpipe-s }
-          Anchored: { state: pipe-s }
+          False: { state: conpipe-s }
+          True: { state: pipe-s }
   - type: Construction
     graph: DisposalPipe
     node: pipe
@@ -135,10 +135,10 @@
       DisposalTagger: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: conpipe-tagger }
-          Anchored: { state: pipe-tagger }
+          False: { state: conpipe-tagger }
+          True: { state: pipe-tagger }
   - type: ActivatableUI
     key: enum.DisposalTaggerUiKey.Key
   - type: UserInterface
@@ -169,10 +169,10 @@
       DisposalEntry: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: conpipe-t }
-          Anchored: { state: pipe-t }
+          False: { state: conpipe-t }
+          True: { state: pipe-t }
   - type: Fixtures
     fixtures:
       fix1:
@@ -209,10 +209,10 @@
       DisposalRouter: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: conpipe-j1s }
-          Anchored: { state: pipe-j1s }
+          False: { state: conpipe-j1s }
+          True: { state: pipe-j1s }
   - type: Flippable
     mirrorEntity: DisposalRouterFlipped
   - type: ActivatableUI
@@ -257,10 +257,10 @@
       DisposalRouter: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: conpipe-j2s }
-          Anchored: { state: pipe-j2s }
+          False: { state: conpipe-j2s }
+          True: { state: pipe-j2s }
   - type: Flippable
     mirrorEntity: DisposalRouter
   - type: Fixtures
@@ -299,10 +299,10 @@
       DisposalJunction: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: conpipe-j1 }
-          Anchored: { state: pipe-j1 }
+          False: { state: conpipe-j1 }
+          True: { state: pipe-j1 }
   - type: Flippable
     mirrorEntity: DisposalJunctionFlipped
   - type: Fixtures
@@ -341,10 +341,10 @@
       DisposalJunction: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: conpipe-j2 }
-          Anchored: { state: pipe-j2 }
+          False: { state: conpipe-j2 }
+          True: { state: pipe-j2 }
   - type: Flippable
     mirrorEntity: DisposalJunction
   - type: Fixtures
@@ -382,10 +382,10 @@
       DisposalJunction: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: conpipe-y }
-          Anchored: { state: pipe-y }
+          False: { state: conpipe-y }
+          True: { state: pipe-y }
   - type: Fixtures
     fixtures:
       fix1:
@@ -418,10 +418,10 @@
       DisposalBend: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: conpipe-c }
-          Anchored: { state: pipe-c }
+          False: { state: conpipe-c }
+          True: { state: pipe-c }
   - type: Fixtures
     fixtures:
       fix1:
@@ -463,10 +463,10 @@
       DisposalSignalRouter: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: signal-router-free }
-          Anchored: { state: signal-router }
+          False: { state: signal-router-free }
+          True: { state: signal-router }
   - type: Flippable
     mirrorEntity: DisposalSignalRouterFlipped
   - type: Construction
@@ -489,9 +489,9 @@
     - 180
   - type: GenericVisualizer
     visuals:
-      enum.DisposalTubeVisuals.VisualState:
+      enum.AnchorVisuals.Anchored:
         pipe:
-          Free: { state: signal-router-flipped-free }
-          Anchored: { state: signal-router-flipped }
+          False: { state: signal-router-flipped-free }
+          True: { state: signal-router-flipped }
   - type: Construction
     node: signal_router_flipped

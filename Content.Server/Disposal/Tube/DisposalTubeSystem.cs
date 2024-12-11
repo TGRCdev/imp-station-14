@@ -323,17 +323,9 @@ namespace Content.Server.Disposal.Tube
         private void UpdateAnchored(EntityUid uid, DisposalTubeComponent component, bool anchored)
         {
             if (anchored)
-            {
                 ConnectTube(uid, component);
-
-                // TODO this visual data should just generalized into some anchored-visuals system/comp, this has nothing to do with disposal tubes.
-                _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Anchored);
-            }
             else
-            {
                 DisconnectTube(uid, component);
-                _appearanceSystem.SetData(uid, DisposalTubeVisuals.VisualState, DisposalTubeVisualState.Free);
-            }
         }
 
         public EntityUid? NextTubeFor(EntityUid target, Direction nextDirection, DisposalTubeComponent? targetTube = null)

@@ -613,10 +613,6 @@ public sealed class NukeSystem : EntitySystem
 
     private void UpdateAppearance(EntityUid uid, NukeComponent nuke)
     {
-        var xform = Transform(uid);
-
-        _appearance.SetData(uid, NukeVisuals.Deployed, xform.Anchored);
-
         NukeVisualState state;
         if (nuke.PlayedAlertSound)
             state = NukeVisualState.YoureFucked;

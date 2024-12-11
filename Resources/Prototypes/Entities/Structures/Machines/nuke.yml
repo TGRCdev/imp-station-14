@@ -29,6 +29,8 @@
       - FestiveSeason
       pride:
       - PrideMonth
+  - type: Anchorable # Updates enum.AnchorVisuals.Anchored
+    flags: None # Don't allow manual anchoring/unanchoring
   - type: GenericVisualizer
     visuals:
       enum.HolidayVisuals.Holiday:
@@ -36,7 +38,7 @@
           festive: { visible: true }
         pride:
           pride: { visible: true }
-      enum.NukeVisuals.Deployed:
+      enum.AnchorVisuals.Anchored:
         enum.NukeVisualLayers.Base:
           False: { state: nuclearbomb_base }
           True:  { state: nuclearbomb_deployed }

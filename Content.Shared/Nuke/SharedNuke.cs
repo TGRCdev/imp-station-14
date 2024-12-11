@@ -12,7 +12,6 @@ namespace Content.Shared.Nuke
     [NetSerializable, Serializable]
     public enum NukeVisuals
     {
-        Deployed,
         State,
     }
 
